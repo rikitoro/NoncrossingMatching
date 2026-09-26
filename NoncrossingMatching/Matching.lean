@@ -8,6 +8,7 @@ noncomputable def totalLength {n : ℕ}
   (R B : Fin n → Point) (σ : Equiv.Perm (Fin n)) : ℝ :=
   ∑ i, dist (R i) (B (σ i))
 
+@[simp, grind .]
 theorem totalLength_swap_lt {n : ℕ} (R B : Fin n → Point) (σ : Equiv.Perm (Fin n))
   (i j : Fin n) (hij : i ≠ j)
   (hcross : SegmentsCross (R i) (B (σ i)) (R j) (B (σ j)))
@@ -32,7 +33,8 @@ theorem totalLength_swap_lt {n : ℕ} (R B : Fin n → Point) (σ : Equiv.Perm (
   have hdecomp (ρ : Equiv.Perm (Fin n)) :
     dist (R i) (B (ρ i)) + dist (R j) (B (ρ j)) +
     ∑ k ∈ rest, dist (R k) (B (ρ k)) =
-    totalLength R B ρ := by sorry
+    totalLength R B ρ := by
+    grind [Finset.add_sum_erase]
   --
   have hτdecomp := hdecomp τ
   have hσdecomp := hdecomp σ
