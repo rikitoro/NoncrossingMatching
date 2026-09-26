@@ -1,13 +1,20 @@
-import NoncrossingMatching.Geometry
-/-! -/
+import NoncrossingMatching.Uncrossing
+
+/-!
+# マッチングの総延長と交換による短縮
+-/
 
 open Set
 
+namespace NoncrossingMatching
+
+/-- 各赤点 `R i` とその相手 `B (σ i)` の距離の総和 -/
 @[simp, grind]
 noncomputable def totalLength {n : ℕ}
   (R B : Fin n → Point) (σ : Equiv.Perm (Fin n)) : ℝ :=
   ∑ i, dist (R i) (B (σ i))
 
+/-- 交差がある場合に2つの相手を交換すると総延長が減少する -/
 @[simp, grind .]
 theorem totalLength_swap_lt {n : ℕ} (R B : Fin n → Point) (σ : Equiv.Perm (Fin n))
   (i j : Fin n) (hij : i ≠ j)
@@ -41,3 +48,11 @@ theorem totalLength_swap_lt {n : ℕ} (R B : Fin n → Point) (σ : Equiv.Perm (
   rw [hτi, hτj] at hτdecomp
   change totalLength R B τ < totalLength R B σ
   grind
+
+/-- 総延長が最小となる置換が存在する -/
+@[simp]
+theorem exists_minimal_matching {n : ℕ} (R B : Fin n → Point) :
+  ∃ σmin, ∀ σ, totalLength R B σmin ≤ totalLength R B σ := by
+  apply Finite.exists_min
+
+end NoncrossingMatching

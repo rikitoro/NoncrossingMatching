@@ -1,0 +1,10 @@
+import NoncrossingMatching
+
+#check NoncrossingMatching.uncrossing_shorter
+#check NoncrossingMatching.totalLength_swap_lt
+#check NoncrossingMatching.exists_minimal_matching
+#check NoncrossingMatching.exists_noncrossing_matching
+
+#print axioms NoncrossingMatching.uncrossing_shorter
+#print axioms NoncrossingMatching.totalLength_swap_lt
+#print axioms NoncrossingMatching.exists_noncrossing_matching
