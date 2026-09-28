@@ -129,7 +129,7 @@ theorem totalLength_swap_lt {n : ℕ} (R B : Fin n → Point) (σ : Equiv.Perm (
   have hpair :
     dist (R i) (B (σ j)) + dist (R j) (B (σ i)) <
     dist (R i) (B (σ i)) + dist (R j) (B (σ j)) := by
-    grind only [uncrossing_shorter_of_cross]
+    apply uncrossing_shorter_of_cross hcross hncoll
   -- i と j の相手を交換したマッチング τ を作る
   let τ := (Equiv.swap i j).trans σ
   have hτi : τ i = σ j := by simp [τ]
@@ -176,16 +176,16 @@ theorem GeneralPosition.noncol_RBB {n : ℕ} {R B : Fin n → Point}
   ¬ Collinear ℝ {R i, B (σ i), B (σ j)} := by
   -- 一般位置条件を適用し、3点の所属と相異性を確認する。
   apply hgp
-  · grind
-  · grind
-  · grind
-  · grind
-  · grind
+  · exact Or.inl ⟨i, rfl⟩
+  · exact Or.inr ⟨σ i, rfl⟩
+  · exact Or.inr ⟨σ j, rfl⟩
+  · exact hRB i (σ i)
+  · exact hRB i (σ j)
   · intro h
     -- 青点が一致すれば、B と σ の単射性から i = j となり矛盾する。
     apply hij
     apply σ.injective
-    grind
+    apply hB h
 
 /-- 主定理：一般位置にある同数の赤点・青点には、非交差完全マッチングが存在する -/
 theorem exists_noncrossing_matching {n : ℕ}
